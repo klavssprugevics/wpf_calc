@@ -1,0 +1,59 @@
+﻿<Window x:Class="kalkulators_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kalkulators_wpf"
+        mc:Ignorable="d"
+        Title="Kalkulators" Height="450" Width="300">
+    <!-- Define grid to organize buttons -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Number buttons-->
+        <Button x:Name="button_digit_7" Grid.Row="2" Grid.Column="0" Click="Button_digit_7_Click">7</Button>
+        <Button x:Name="button_digit_8" Grid.Row="2" Grid.Column="1" Click="Button_digit_8_Click">8</Button>
+        <Button x:Name="button_digit_9" Grid.Row="2" Grid.Column="2" Click="Button_digit_9_Click">9</Button>
+        <Button x:Name="button_digit_4" Grid.Row="3" Grid.Column="0" Click="Button_digit_4_Click">4</Button>
+        <Button x:Name="button_digit_5" Grid.Row="3" Grid.Column="1" Click="Button_digit_5_Click">5</Button>
+        <Button x:Name="button_digit_6" Grid.Row="3" Grid.Column="2" Click="Button_digit_6_Click">6</Button>
+        <Button x:Name="button_digit_1" Grid.Row="4" Grid.Column="0" Click="Button_digit_1_Click">1</Button>
+        <Button x:Name="button_digit_2" Grid.Row="4" Grid.Column="1" Click="Button_digit_2_Click">2</Button>
+        <Button x:Name="button_digit_3" Grid.Row="4" Grid.Column="2" Click="Button_digit_3_Click">3</Button>
+        <Button x:Name="button_digit_0" Grid.Row="5" Grid.Column="1" Click="Button_digit_0_Click">0</Button>
+        
+        <!-- Operation buttons -->
+        <Button x:Name="button_operation_plus" Grid.Row="1" Grid.Column="3" Click="Button_operation_plus_Click">+</Button>
+        <Button x:Name="button_operation_minus" Grid.Row="2" Grid.Column="3" Click="Button_operation_minus_Click">-</Button>
+        <Button x:Name="button_operation_multiply" Grid.Row="3" Grid.Column="3" Click="Button_operation_multiply_Click">*</Button>
+        <Button x:Name="button_operation_division" Grid.Row="4" Grid.Column="3" Click="Button_operation_division_Click">/</Button>
+        <Button x:Name="button_operation_equals" Grid.Row="5" Grid.Column="3" Click="Button_operation_equals_Click">=</Button>
+
+        <!-- Clear buttons -->
+        <Button x:Name="button_utiliy_clear_all" Grid.Row="1" Grid.Column="0" Click="Button_utiliy_clear_all_Click">CE</Button>
+        <Button x:Name="button_utiliy_clear_last" Grid.Row="1" Grid.Column="1" Click="Button_utiliy_clear_last_Click">C</Button>
+        <Button x:Name="button_utiliy_clear_last_element" Grid.Row="1" Grid.Column="2" Content="&lt;=" Click="Button_utiliy_clear_last_element_Click"/>
+        
+        <!-- Floating point button & positive/negative number -->
+        <Button x:Name="button_utility_reverse_sign" Grid.Row="5" Grid.Column="0">+/-</Button>
+        <Button x:Name="button_utilit_floating_point" Grid.Row="5" Grid.Column="2">.</Button>
+
+
+        <!-- Display textbox -->
+        <TextBox x:Name="display"  IsReadOnly="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right" VerticalAlignment="Bottom" FontSize="32" BorderThickness="0">0</TextBox>
+           
+    </Grid>
+</Window>
