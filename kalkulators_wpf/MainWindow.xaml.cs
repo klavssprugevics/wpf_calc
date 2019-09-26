@@ -253,11 +253,15 @@ namespace kalkulators_wpf
             if(operation == "")
             {
                 string temp = operand1.ToString();
+
                 if(temp.Length != 0)
                 {
-                    temp.Remove(temp.Length - 1);
+                    temp = temp.Remove(temp.Length - 1);
                 }
+                Console.WriteLine(temp);
                 operand1 = float.Parse(temp);
+                Console.WriteLine(operand1);
+
                 display.Text = temp;
             }
             else
@@ -265,7 +269,7 @@ namespace kalkulators_wpf
                 string temp = operand2.ToString();
                 if (temp.Length != 0)
                 {
-                    temp.Remove(temp.Length - 1);
+                    temp = temp.Remove(temp.Length - 1);
                 }
                 operand2 = float.Parse(temp);
                 display.Text = temp;
