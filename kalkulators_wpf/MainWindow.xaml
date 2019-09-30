@@ -53,7 +53,7 @@
 
 
         <!-- Display textbox -->
-        <TextBox x:Name="display"  IsReadOnly="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right" VerticalAlignment="Bottom" FontSize="32" BorderThickness="0">0</TextBox>
+        <TextBox x:Name="display"  IsReadOnly="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right" VerticalAlignment="Bottom" FontSize="32" BorderThickness="0"></TextBox>
            
     </Grid>
 </Window>

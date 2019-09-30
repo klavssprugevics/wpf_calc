@@ -20,11 +20,11 @@ namespace kalkulators_wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        float operand1 = 0;
-        float operand2 = 0;
+        double operand1 = 0;
+        double operand2 = 0;
         string operation = "";
 
-        float result = 0;
+        double result = double.NaN;
 
 
         //Flow: ieraksta 1. operandu, uzspiežot operatoru, displejā parādās 0, tiek saglabāts 1. operands. Pēc tam ievada 2. operandu un veic aprēķinus.
@@ -33,157 +33,106 @@ namespace kalkulators_wpf
             InitializeComponent();
         }
 
-        private void Button_digit_1_Click(object sender, RoutedEventArgs e)
+        private void input_digit(int digit)
         {
             if (operation == "")
             {
-                operand1 = operand1 * 10 + 1;
+                operand1 = operand1 * 10 + digit;
                 display.Text = operand1.ToString();
             }
             else
             {
-                operand2 = operand2 * 10 + 1;
-                display.Text = operand2.ToString();
+                operand2 = operand2 * 10 + digit;
+                display.Text += digit.ToString();
             }
+        }
+
+
+        private void Button_digit_1_Click(object sender, RoutedEventArgs e)
+        {
+            input_digit(1);
 
         }
 
         private void Button_digit_2_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 2;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 2;
-                display.Text = operand2.ToString();
-            }
+            input_digit(2);
+
         }
 
         private void Button_digit_3_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 3;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 3;
-                display.Text = operand2.ToString();
-            }
+            input_digit(3);
+
+
         }
 
         private void Button_digit_4_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 4;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 4;
-                display.Text = operand2.ToString();
-            }
+            input_digit(4);
+
         }
 
         private void Button_digit_5_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 5;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 5;
-                display.Text = operand2.ToString();
-            }
+            input_digit(5);
+
         }
 
         private void Button_digit_6_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 6;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 6;
-                display.Text = operand2.ToString();
-            }
+            input_digit(6);
+
         }
 
         private void Button_digit_7_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 7;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 7;
-                display.Text = operand2.ToString();
-            }
+            input_digit(7);
+
         }
 
         private void Button_digit_8_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 8;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 8;
-                display.Text = operand2.ToString();
-            }
+            input_digit(8);
+
         }
 
         private void Button_digit_9_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10 + 9;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10 + 9;
-                display.Text = operand2.ToString();
-            }
+            input_digit(9);
+
+        }
+
+        private void Button_digit_0_Click(object sender, RoutedEventArgs e)
+        {
+            input_digit(0);
+
         }
 
         private void Button_operation_plus_Click(object sender, RoutedEventArgs e)
         {
-            display.Text = "0";
+            display.Text += "+";
             operation = "+";
 
         }
 
         private void Button_operation_minus_Click(object sender, RoutedEventArgs e)
         {
-            display.Text = "0";
+            display.Text += "-";
             operation = "-";
 
         }
 
         private void Button_operation_multiply_Click(object sender, RoutedEventArgs e)
         {
-            display.Text = "0";
+            display.Text += "*";
             operation = "*";
 
         }
 
         private void Button_operation_division_Click(object sender, RoutedEventArgs e)
         {
-            display.Text = "0";
+            display.Text += "/";
             operation = "/";
         }
 
@@ -213,19 +162,7 @@ namespace kalkulators_wpf
             display.Text = result.ToString();
         }
 
-        private void Button_digit_0_Click(object sender, RoutedEventArgs e)
-        {
-            if (operation == "")
-            {
-                operand1 = operand1 * 10;
-                display.Text = operand1.ToString();
-            }
-            else
-            {
-                operand2 = operand2 * 10;
-                display.Text = operand2.ToString();
-            }
-        }
+
 
         private void Button_utiliy_clear_all_Click(object sender, RoutedEventArgs e)
         {
