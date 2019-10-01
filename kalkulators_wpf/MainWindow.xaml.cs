@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace kalkulators_wpf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         double operand1 = 0;
@@ -111,34 +109,86 @@ namespace kalkulators_wpf
 
         private void Button_operation_plus_Click(object sender, RoutedEventArgs e)
         {
-            display.Text += "+";
-            operation = "+";
+			if(!is_textbox_empty())
+			{
+				if (!is_last_character_operator())
+				{
+					display.Text += "+";
+					operation = "+";
+				}
+			}
 
         }
 
         private void Button_operation_minus_Click(object sender, RoutedEventArgs e)
         {
-            display.Text += "-";
-            operation = "-";
-
-        }
+			if (!is_textbox_empty())
+			{
+				if (!is_last_character_operator())
+				{
+					display.Text += "-";
+					operation = "-";
+				}
+			}
+		}
 
         private void Button_operation_multiply_Click(object sender, RoutedEventArgs e)
         {
-            display.Text += "*";
-            operation = "*";
+			if (!is_textbox_empty())
+			{
+				if (!is_last_character_operator())
+				{
+					display.Text += "*";
+					operation = "*";
+				}
+			}
 
-        }
+		}
 
         private void Button_operation_division_Click(object sender, RoutedEventArgs e)
         {
-            display.Text += "/";
-            operation = "/";
-        }
+			if (!is_textbox_empty())
+			{
+				if (!is_last_character_operator())
+				{
+					display.Text += "/";
+					operation = "/";
+				}
+			}
+		}
+
+		private bool is_textbox_empty()
+		{
+			if (this.display.Text.Length == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		private bool is_last_character_operator()
+		{ 
+
+			char last_character = display.Text[display.Text.Length - 1];
+
+
+			if (last_character.Equals('+') || last_character.Equals('-') || last_character.Equals('/') ||
+				last_character.Equals('*') || last_character.Equals('%') || last_character.Equals('^'))
+			{
+				Console.WriteLine($"Last character:{last_character} ");
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 
 
-        private void Button_operation_equals_Click(object sender, RoutedEventArgs e)
+			private void Button_operation_equals_Click(object sender, RoutedEventArgs e)
         {
             switch(operation)
             {
