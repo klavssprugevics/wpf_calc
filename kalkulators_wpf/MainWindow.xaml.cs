@@ -273,7 +273,8 @@ namespace kalkulators_wpf
 			}
 			else
 			{
-				operand1 = result;
+				operand1 = double.NaN;
+				operand2 = double.NaN;
 				operation = ' ';
 
 				this.display.Text = string.Concat(result);
@@ -328,29 +329,26 @@ namespace kalkulators_wpf
 			}
 		}
 
-		// Reverses the sign of the active operand.
+		// Reverses the sign of the first operand.
 		private void Button_utility_reverse_Click(object sender, RoutedEventArgs e)
 		{
-			// TODO: Reverse only works with positive numbers.
 			// You can only reverse one number (first operand) i.e. you cannot reverse the sign for a whole equation.
-			if (!is_textbox_empty() && input.Length != 0)
+			if (!is_textbox_empty() && input.Length != 0 && operand1.Equals(double.NaN))
 			{
 				double temp = double.Parse(input);
-				Console.WriteLine($"Input: {input}");
-				Console.WriteLine($"Operator: {operation}");
-
 				if(temp > 0)
 				{
-					display.Text = display.Text.Insert(display.Text.Length-1, "-");
-
+					//  Adds the '-'
+					display.Text = display.Text.Insert(0, "-");
 				}
 				else if(temp < 0)
 				{
-					display.Text = display.Text.Remove(display.Text.Length);
+					//Removes the '-'
+					display.Text = display.Text.Remove(0);
 				}
 				temp = temp * (-1);
 				input = temp.ToString();
-
+				display.Text = input;
 			}
 		}
 
