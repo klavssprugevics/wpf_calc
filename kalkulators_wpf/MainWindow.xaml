@@ -40,7 +40,7 @@
         <Button x:Name="button_operation_minus" Grid.Row="2" Grid.Column="3" Click="Button_operation_minus_Click">-</Button>
         <Button x:Name="button_operation_multiply" Grid.Row="3" Grid.Column="3" Click="Button_operation_multiply_Click">*</Button>
         <Button x:Name="button_operation_division" Grid.Row="4" Grid.Column="3" Click="Button_operation_division_Click">/</Button>
-        <Button x:Name="button_operation_equals" Grid.Row="5" Grid.Column="3" Click="Button_operation_equals_Click">=</Button>
+        <Button x:Name="button_operation_equals" Grid.Row="5" Grid.Column="3" Click="Button_result_Click">=</Button>
 
         <!-- Clear buttons -->
         <Button x:Name="button_utiliy_clear_all" Grid.Row="1" Grid.Column="0" Click="Button_utiliy_clear_all_Click">CE</Button>
@@ -49,7 +49,7 @@
         
         <!-- Floating point button & positive/negative number -->
         <Button x:Name="button_utility_reverse_sign" Grid.Row="5" Grid.Column="0">+/-</Button>
-        <Button x:Name="button_utilit_floating_point" Grid.Row="5" Grid.Column="2">.</Button>
+        <Button x:Name="button_utility_floating_point" Grid.Row="5" Grid.Column="2" Click="Button_utility_floating_point_Click">.</Button>
 
 
         <!-- Display textbox -->
