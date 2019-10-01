@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 namespace kalkulators_wpf
 {
+	// Code is 90% from previous homework - windows form app calculator.
 
     public partial class MainWindow : Window
     {
@@ -32,7 +33,7 @@ namespace kalkulators_wpf
 		private void Button_digit_1_Click(object sender, RoutedEventArgs e)
 		{
 			input += "1";
-			this.display.Text += "";
+			this.display.Text += "1";
 		}
 
 		private void Button_digit_2_Click(object sender, RoutedEventArgs e)
@@ -102,6 +103,9 @@ namespace kalkulators_wpf
 				input += ".";
 			}
 		}
+
+
+
 
 
 		// All basic operation button click events defined here.
@@ -179,6 +183,7 @@ namespace kalkulators_wpf
 			parse_two_operand_operation('/');
 		}
 
+
 		// All operations that require two operands are defined here.
 		private void parse_two_operand_operation(char oper)
 		{
@@ -213,12 +218,11 @@ namespace kalkulators_wpf
 			}
 		}
 
-
 		// Main function for calculating the result after "=" is clicked.
 		private void Button_result_Click(object sender, RoutedEventArgs e)
 		{
 			// Checks whether the input(2nd operand) is empty.
-			if (input == "")
+			if (input == "" || input == "-")
 			{
 				return;
 			}
@@ -281,8 +285,10 @@ namespace kalkulators_wpf
 
 
 
+
+
 		// Completely wipes everything except for the history.
-		private void Button_utiliy_clear_all_Click(object sender, RoutedEventArgs e)
+		private void Button_utility_clear_all_Click(object sender, RoutedEventArgs e)
 		{
 			this.display.Text = string.Empty;
 			input = string.Empty;
@@ -291,7 +297,7 @@ namespace kalkulators_wpf
 		}
 
 		// Deletes the last character in the input (not operand).
-		private void Button_utiliy_clear_last_element_Click(object sender, RoutedEventArgs e)
+		private void Button_utility_clear_last_element_Click(object sender, RoutedEventArgs e)
 		{
 			if (is_textbox_empty())
 			{
@@ -306,15 +312,52 @@ namespace kalkulators_wpf
 		}
 
 		// Deletes the last operand.
-		private void Button_utiliy_clear_last_Click(object sender, RoutedEventArgs e)
+		private void Button_utility_clear_last_Click(object sender, RoutedEventArgs e)
 		{
+			if(!is_textbox_empty() && input.Length != 0)
+			{
+				// Removes only the text that containts the current operand.
+				display.Text = display.Text.Remove(display.Text.Length - input.Length, input.Length);
+				input = "";
 
+			}
+			else
+			{
+				return;
+
+			}
+		}
+
+		// Reverses the sign of the active operand.
+		private void Button_utility_reverse_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO: Reverse only works with positive numbers.
+			// You can only reverse one number (first operand) i.e. you cannot reverse the sign for a whole equation.
+			if (!is_textbox_empty() && input.Length != 0)
+			{
+				double temp = double.Parse(input);
+				Console.WriteLine($"Input: {input}");
+				Console.WriteLine($"Operator: {operation}");
+
+				if(temp > 0)
+				{
+					display.Text = display.Text.Insert(display.Text.Length-1, "-");
+
+				}
+				else if(temp < 0)
+				{
+					display.Text = display.Text.Remove(display.Text.Length);
+				}
+				temp = temp * (-1);
+				input = temp.ToString();
+
+			}
 		}
 
 
 
 
-
+		// Helper functions.
 		// Checks whether the textbox is empty.
 		private bool is_textbox_empty()
 		{

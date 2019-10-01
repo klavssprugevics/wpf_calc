@@ -43,12 +43,12 @@
         <Button x:Name="button_operation_equals" Grid.Row="5" Grid.Column="3" Click="Button_result_Click">=</Button>
 
         <!-- Clear buttons -->
-        <Button x:Name="button_utiliy_clear_all" Grid.Row="1" Grid.Column="0" Click="Button_utiliy_clear_all_Click">CE</Button>
-        <Button x:Name="button_utiliy_clear_last" Grid.Row="1" Grid.Column="1" Click="Button_utiliy_clear_last_Click">C</Button>
-        <Button x:Name="button_utiliy_clear_last_element" Grid.Row="1" Grid.Column="2" Content="&lt;=" Click="Button_utiliy_clear_last_element_Click"/>
+        <Button x:Name="button_utiliy_clear_all" Grid.Row="1" Grid.Column="0" Click="Button_utility_clear_all_Click">CE</Button>
+        <Button x:Name="button_utiliy_clear_last" Grid.Row="1" Grid.Column="1" Click="Button_utility_clear_last_Click">C</Button>
+        <Button x:Name="button_utiliy_clear_last_element" Grid.Row="1" Grid.Column="2" Content="&lt;=" Click="Button_utility_clear_last_element_Click"/>
         
         <!-- Floating point button & positive/negative number -->
-        <Button x:Name="button_utility_reverse_sign" Grid.Row="5" Grid.Column="0">+/-</Button>
+        <Button x:Name="button_utility_reverse_sign" Grid.Row="5" Grid.Column="0" Click="Button_utility_reverse_Click">+/-</Button>
         <Button x:Name="button_utility_floating_point" Grid.Row="5" Grid.Column="2" Click="Button_utility_floating_point_Click">.</Button>
 
 
