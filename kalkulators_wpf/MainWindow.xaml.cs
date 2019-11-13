@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,10 +14,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace kalkulators_wpf
 {
-	// Code is 90% from previous homework - windows form app calculator.
+	// TODO: Bug - app crashes when last char is "." and pressed equals
 
     public partial class MainWindow : Window
     {
@@ -28,9 +30,13 @@ namespace kalkulators_wpf
 		string input = string.Empty;        // String that's being parsed into operand1/operand2.
 
 
+        ////Cancelling a started task:
+        static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        static CancellationToken token = cancellationTokenSource.Token;
 
-		// All digit button click events definded here.
-		private void Button_digit_1_Click(object sender, RoutedEventArgs e)
+
+        // All digit button click events definded here.
+        private void Button_digit_1_Click(object sender, RoutedEventArgs e)
 		{
 			input += "1";
 			this.display.Text += "1";
@@ -393,5 +399,110 @@ namespace kalkulators_wpf
 		}
 
 
-	}
+         int numberOfCores = Environment.ProcessorCount;
+         int iterations;
+
+        internal void MonteCarloPiApproximationParallelTasksEstimation(Label label, ProgressBar pb, CancellationToken cancel)
+        {
+
+            double piApprox = 0;
+            int inCircle = 0;
+            double x, y = 0;
+
+            int[] localCounters = new int[numberOfCores];
+            Task[] tasks = new Task[numberOfCores];
+
+            for (int i = 0; i < numberOfCores ; i++)
+            {
+                int procIndex = i;
+                tasks[procIndex] = Task.Run(() =>
+                {
+                    int localCountersInsideIndex = 0;
+                    Random rnd = new Random();
+
+                    for (int j = 0; j < iterations / numberOfCores; j++)
+                    {
+                        if (cancel.IsCancellationRequested)
+                        {
+                            Console.WriteLine("Cancel() has been called!");
+                            break; ;
+                        }
+
+                        x = rnd.NextDouble();
+                        y = rnd.NextDouble();
+
+                        double distance = Math.Pow(x, 2) + Math.Pow(y, 2);
+
+
+                        if (distance <= 1)
+                        {
+                            localCountersInsideIndex += 1;
+                        }
+
+
+                        //Dispatcher.Invoke(() =>
+                        //{
+                        //    pb.Value += 1;
+                        //});
+
+                    }
+                    localCounters[procIndex] = localCountersInsideIndex;
+                });
+            }
+
+            Task.WaitAll(tasks);
+            inCircle = localCounters.Sum();
+            piApprox = 4 * ((double)inCircle / (double)iterations);
+            Console.WriteLine();
+            Console.WriteLine("Approximated pi = {0}", piApprox.ToString("F8"));
+            Dispatcher.Invoke(() =>
+            {
+                label.Content = piApprox.ToString("F8");
+            });
+        }
+
+
+
+        private  async void Button_monteCarlo_start_Click(object sender, RoutedEventArgs e)
+        {
+            string input = iterations_input.Text;
+
+            string digitRegex = @"[0-9]+";
+            if(Regex.IsMatch(input, digitRegex))
+            {
+                iterations = int.Parse(input);
+                if(iterations <= 0)
+                {
+                    MessageBox.Show("Enter a count larger than 0.");
+                    return;
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("You can only enter natural number.");
+                return;
+            }
+
+
+
+            mc_progressbar.Value = 0;
+            mc_progressbar.Maximum = iterations;
+
+
+
+            Task monteCarlo = new Task(() => MonteCarloPiApproximationParallelTasksEstimation(result_label, mc_progressbar, token));
+            monteCarlo.Start();
+
+
+
+
+        }
+
+        private void Button_monteCarlo_stop_Click(object sender, RoutedEventArgs e)
+        {
+            cancellationTokenSource.Cancel();
+        }
+    }
 }
