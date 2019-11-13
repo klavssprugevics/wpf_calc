@@ -28,9 +28,14 @@ namespace kalkulators_wpf
 		double result;                      // Result after an operation, afterwards Operand1 = result.
 
 		string input = string.Empty;        // String that's being parsed into operand1/operand2.
+        bool isRunning = false;             // Flag that indicates whether the parallel process is running.
+        int currentIteration = 0;           // Integer that counts the iteration in the parallel process.
+        int totalIterations = 0;           // User chosen total iteration count.
+        int numberOfCores = Environment.ProcessorCount;
 
 
-        ////Cancelling a started task:
+
+        //Cancelling a started task:
         static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         static CancellationToken token = cancellationTokenSource.Token;
 
@@ -399,10 +404,9 @@ namespace kalkulators_wpf
 		}
 
 
-         int numberOfCores = Environment.ProcessorCount;
-         int iterations;
 
-        internal void MonteCarloPiApproximationParallelTasksEstimation(Label label, ProgressBar pb, CancellationToken cancel)
+        // Concurrency
+        internal void MonteCarloPiApproximationParallelTasksEstimation(Label label, CancellationToken cancel)
         {
 
             double piApprox = 0;
@@ -420,12 +424,11 @@ namespace kalkulators_wpf
                     int localCountersInsideIndex = 0;
                     Random rnd = new Random();
 
-                    for (int j = 0; j < iterations / numberOfCores; j++)
+                    for (int j = 0; j <= totalIterations / numberOfCores + 1; j++)
                     {
                         if (cancel.IsCancellationRequested)
                         {
-                            Console.WriteLine("Cancel() has been called!");
-                            break; ;
+                            break;
                         }
 
                         x = rnd.NextDouble();
@@ -440,25 +443,27 @@ namespace kalkulators_wpf
                         }
 
 
-                        //Dispatcher.Invoke(() =>
-                        //{
-                        //    pb.Value += 1;
-                        //});
+                        // Updates the progress bar based on the last started task.
+                        if(procIndex == numberOfCores-1)
+                            currentIteration = j * numberOfCores;
 
                     }
                     localCounters[procIndex] = localCountersInsideIndex;
                 });
             }
-
+            
             Task.WaitAll(tasks);
+
             inCircle = localCounters.Sum();
-            piApprox = 4 * ((double)inCircle / (double)iterations);
+            piApprox = 4 * ((double)inCircle / (double)totalIterations);
             Console.WriteLine();
             Console.WriteLine("Approximated pi = {0}", piApprox.ToString("F8"));
             Dispatcher.Invoke(() =>
             {
                 label.Content = piApprox.ToString("F8");
             });
+            isRunning = false;
+
         }
 
 
@@ -470,13 +475,12 @@ namespace kalkulators_wpf
             string digitRegex = @"[0-9]+";
             if(Regex.IsMatch(input, digitRegex))
             {
-                iterations = int.Parse(input);
-                if(iterations <= 0)
+                totalIterations = int.Parse(input);
+                if(totalIterations <= 0)
                 {
                     MessageBox.Show("Enter a count larger than 0.");
                     return;
                 }
-
 
             }
             else
@@ -485,24 +489,49 @@ namespace kalkulators_wpf
                 return;
             }
 
-
+            isRunning = true;
+            currentIteration = 0;
 
             mc_progressbar.Value = 0;
-            mc_progressbar.Maximum = iterations;
+            mc_progressbar.Maximum = totalIterations;
 
-
-
-            Task monteCarlo = new Task(() => MonteCarloPiApproximationParallelTasksEstimation(result_label, mc_progressbar, token));
+            // Monte Carlo pi approx task start.
+            Task monteCarlo = new Task(() => MonteCarloPiApproximationParallelTasksEstimation(result_label, token));
             monteCarlo.Start();
 
+            // Progress bar update start.
+            Task progress = new Task(() => UpdateLabel(token));
+            progress.Start();
 
 
+        }
+
+
+        private async void UpdateLabel(CancellationToken cancel)
+        {
+
+            // Checks if the calculation is happening and waits for cancellation. Updates progress bar.
+            while (isRunning)
+            {
+                if (cancel.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                Application.Current.Dispatcher.Invoke(() => 
+                {
+                    mc_progressbar.Value = (currentIteration);
+                });
+            }
 
         }
 
         private void Button_monteCarlo_stop_Click(object sender, RoutedEventArgs e)
         {
+            // Cancel our current task and create a new cancellation token.
             cancellationTokenSource.Cancel();
+            cancellationTokenSource = new CancellationTokenSource();
+            token = cancellationTokenSource.Token;
         }
     }
 }

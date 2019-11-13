@@ -63,8 +63,8 @@
         <Button x:Name="button_monteCarlo_start" Grid.Row="6" Grid.Column="0" Click="Button_monteCarlo_start_Click">MCPI Start</Button>
         <Button x:Name="button_monteCarlo_stop" Grid.Row="6" Grid.Column="1" Click="Button_monteCarlo_stop_Click">MCPI Stop</Button>
 
-        <TextBox x:Name="iterations_input" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" FontWeight="Bold" FontSize="16" BorderThickness="0">100000000</TextBox>
-        <ProgressBar x:Name="mc_progressbar" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4"></ProgressBar>
+        <TextBox x:Name="iterations_input" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" FontWeight="Bold" FontSize="16" BorderThickness="0">i</TextBox>
+        <ProgressBar x:Name="mc_progressbar" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" Minimum="0" Maximum="100"></ProgressBar>
         <Label Grid.Row="8" Grid.Column="0">Result:</Label>
         <Label x:Name="result_label" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3"></Label>
         

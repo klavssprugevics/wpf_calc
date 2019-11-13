@@ -63,3 +63,8 @@ C:\Users\Klavs.DESKTOP-DIODSBB\source\repos\wpf_calc\kalkulators_wpf\obj\Debug\k
 C:\Users\Klavs.DESKTOP-DIODSBB\source\repos\wpf_calc\kalkulators_wpf\obj\Debug\kalkulators_wpf.csproj.CopyComplete
 C:\Users\Klavs.DESKTOP-DIODSBB\source\repos\wpf_calc\kalkulators_wpf\obj\Debug\kalkulators_wpf.exe
 C:\Users\Klavs.DESKTOP-DIODSBB\source\repos\wpf_calc\kalkulators_wpf\obj\Debug\kalkulators_wpf.pdb
+C:\Users\Klavs\source\repos\wpf_calc\kalkulators_wpf\bin\Debug\Microsoft.Owin.dll
+C:\Users\Klavs\source\repos\wpf_calc\kalkulators_wpf\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\Klavs\source\repos\wpf_calc\kalkulators_wpf\bin\Debug\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Klavs\source\repos\wpf_calc\kalkulators_wpf\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Klavs\source\repos\wpf_calc\kalkulators_wpf\bin\Debug\Owin.dll
